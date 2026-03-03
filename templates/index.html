@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Home — Attendance{% endblock %}
+
+{% block content %}
+<h1>Attendance</h1>
+
+{% if cohorts %}
+    {% for cohort in cohorts %}
+    <section class="cohort-section">
+        <h2>{{ cohort.name }}</h2>
+        {% set classes = classes_by_cohort[cohort.id] %}
+        {% if classes %}
+        <ul class="class-list">
+            {% for cls in classes %}
+            <li>
+                <a href="{{ url_for('attendance', class_id=cls.id) }}">{{ cls.name }}</a>
+                <a href="{{ url_for('report', class_id=cls.id) }}" class="report-link">Report</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="muted">No classes yet.</p>
+        {% endif %}
+    </section>
+    {% endfor %}
+{% else %}
+    <p>No cohorts yet. <a href="{{ url_for('manage') }}">Add one in Manage</a>.</p>
+{% endif %}
+{% endblock %}

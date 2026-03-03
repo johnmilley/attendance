@@ -1,0 +1,365 @@
+/* Palette — matches kitty.conf + tmux burnt orange theme
+   bg:         #1a1612
+   surface:    #2a2018
+   border:     #3d3530
+   muted:      #a09080
+   fg:         #e8dcc8
+   accent:     #cc5500
+   accent-hi:  #e87820
+   green:      #6a9f5a
+   red:        #cc3333
+   blue:       #5577aa
+*/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code", monospace;
+    line-height: 1.6;
+    color: #e8dcc8;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+    background: #1a1612;
+}
+
+nav {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0.75rem 0;
+    border-bottom: 2px solid #cc5500;
+    margin-bottom: 1.5rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: #cc5500;
+    font-weight: 600;
+}
+
+nav a:hover {
+    color: #e87820;
+}
+
+h1 {
+    margin-bottom: 1rem;
+    color: #cc5500;
+}
+
+h2 {
+    margin-bottom: 0.5rem;
+    color: #e87820;
+}
+
+a {
+    color: #e07030;
+}
+
+a:hover {
+    color: #e87820;
+}
+
+/* Home page */
+
+.cohort-section {
+    margin-bottom: 1.5rem;
+}
+
+.class-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.class-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.class-list a {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: #cc5500;
+    color: #1a1612;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.class-list a:hover {
+    background: #e87820;
+}
+
+.class-list .report-link {
+    background: #2a2018;
+    color: #a09080;
+    border: 1px solid #3d3530;
+    font-size: 0.85rem;
+}
+
+.class-list .report-link:hover {
+    background: #3d3530;
+    color: #e8dcc8;
+}
+
+.muted {
+    color: #a09080;
+    font-style: italic;
+}
+
+/* Attendance page */
+
+.date-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.date-picker {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.date-picker input[type="date"] {
+    padding: 0.3rem 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #3d3530;
+    border-radius: 4px;
+    background: #2a2018;
+    color: #e8dcc8;
+    font-family: inherit;
+    color-scheme: dark;
+}
+
+.tracked-dates {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.tracked-dates summary {
+    cursor: pointer;
+    color: #a09080;
+}
+
+.tracked-dates summary:hover {
+    color: #e8dcc8;
+}
+
+.tracked-dates ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+}
+
+.tracked-dates li a {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: #2a2018;
+    border: 1px solid #3d3530;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: #a09080;
+}
+
+.tracked-dates li a:hover {
+    background: #3d3530;
+    color: #e8dcc8;
+}
+
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.attendance-table th,
+.attendance-table td {
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #3d3530;
+}
+
+.attendance-table thead th {
+    background: #2a2018;
+    color: #cc5500;
+    font-weight: 600;
+}
+
+.attendance-table tbody tr:hover {
+    background: #2a2018;
+}
+
+.checkbox-cell {
+    text-align: center;
+    width: 80px;
+}
+
+.checkbox-cell input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    accent-color: #cc5500;
+}
+
+/* Manage page */
+
+.manage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.manage-card {
+    background: #2a2018;
+    border: 1px solid #3d3530;
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.manage-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+input[type="text"],
+select,
+textarea {
+    padding: 0.4rem 0.6rem;
+    font-size: 1rem;
+    border: 1px solid #3d3530;
+    border-radius: 4px;
+    font-family: inherit;
+    background: #1a1612;
+    color: #e8dcc8;
+}
+
+input[type="text"]::placeholder,
+textarea::placeholder {
+    color: #a09080;
+}
+
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #cc5500;
+}
+
+select {
+    color-scheme: dark;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    background: #cc5500;
+    color: #1a1612;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: inherit;
+}
+
+button:hover {
+    background: #e87820;
+}
+
+.file-label {
+    font-size: 0.9rem;
+    color: #a09080;
+}
+
+.file-label input[type="file"] {
+    display: block;
+    margin-top: 0.25rem;
+    color: #a09080;
+}
+
+/* Tables (manage & report) */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    background: #1a1612;
+}
+
+th, td {
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #3d3530;
+}
+
+thead th {
+    background: #2a2018;
+    color: #cc5500;
+    font-weight: 600;
+}
+
+/* Report page */
+
+.report-table .low-attendance {
+    background: rgba(204, 51, 51, 0.15);
+}
+
+.absent-dates {
+    font-size: 0.85rem;
+    color: #a09080;
+}
+
+section {
+    margin-bottom: 1.5rem;
+}
+
+/* Inline student edit */
+
+.inline-edit {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.inline-edit input[type="text"] {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.9rem;
+    width: 140px;
+}
+
+.btn-save {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+    background: #6a9f5a;
+    color: #1a1612;
+}
+
+.btn-save:hover {
+    background: #88c46e;
+}
+
+.btn-delete {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+    background: #cc3333;
+    color: #1a1612;
+}
+
+.btn-delete:hover {
+    background: #e05555;
+}

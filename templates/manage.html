@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Manage — Attendance{% endblock %}
+
+{% block content %}
+<h1>Manage</h1>
+
+<div class="manage-grid">
+
+    <section class="manage-card">
+        <h2>Add Cohort</h2>
+        <form method="post" action="{{ url_for('create_cohort') }}">
+            <input type="text" name="name" placeholder="e.g. SD2025" required>
+            <button type="submit">Add Cohort</button>
+        </form>
+    </section>
+
+    <section class="manage-card">
+        <h2>Add Class</h2>
+        <form method="post" action="{{ url_for('create_class') }}">
+            <select name="cohort_id" required>
+                <option value="">Select cohort…</option>
+                {% for cohort in cohorts %}
+                <option value="{{ cohort.id }}">{{ cohort.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="name" placeholder="e.g. CP1895" required>
+            <button type="submit">Add Class</button>
+        </form>
+    </section>
+
+    <section class="manage-card">
+        <h2>Import Students</h2>
+        <form method="post" action="{{ url_for('import_students') }}" enctype="multipart/form-data">
+            <select name="cohort_id" required>
+                <option value="">Select cohort…</option>
+                {% for cohort in cohorts %}
+                <option value="{{ cohort.id }}">{{ cohort.name }}</option>
+                {% endfor %}
+            </select>
+            <textarea name="students_text" rows="8" placeholder="Paste students, one per line&#10;Last, First"></textarea>
+            <label class="file-label">
+                Or upload a file:
+                <input type="file" name="students_file" accept=".txt,.csv">
+            </label>
+            <button type="submit">Import</button>
+        </form>
+    </section>
+
+</div>
+
+{% if students %}
+<section>
+    <h2>Students</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Cohort</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in students %}
+            <tr id="student-{{ s.id }}">
+                <td>
+                    <form method="post" action="{{ url_for('edit_student', student_id=s.id) }}" class="inline-edit">
+                        <input type="text" name="last_name" value="{{ s.last_name }}" required>
+                        <input type="text" name="first_name" value="{{ s.first_name }}">
+                        <button type="submit" class="btn-save" title="Save">Save</button>
+                    </form>
+                </td>
+                <td></td>
+                <td>{{ s.cohort_name }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('delete_student', student_id=s.id) }}"
+                          onsubmit="return confirm('Remove {{ s.first_name }} {{ s.last_name }}?')">
+                        <button type="submit" class="btn-delete" title="Remove">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endif %}
+
+{% if classes %}
+<section>
+    <h2>Classes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Class</th>
+                <th>Cohort</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in classes %}
+            <tr>
+                <td>{{ c.name }}</td>
+                <td>{{ c.cohort_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}{{ cls.name }} — Attendance{% endblock %}
+
+{% block content %}
+<h1>{{ cls.name }}</h1>
+
+<div class="date-controls">
+    <form class="date-picker" method="get" action="{{ url_for('attendance', class_id=cls.id) }}">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" value="{{ selected_date }}"
+               onchange="this.form.submit()">
+    </form>
+
+    {% if selected_date in tracked_dates %}
+    <form method="post" action="{{ url_for('delete_date', class_id=cls.id) }}"
+          onsubmit="return confirm('Remove all attendance records for {{ selected_date }}?')">
+        <input type="hidden" name="date" value="{{ selected_date }}">
+        <button type="submit" class="btn-delete">Remove This Date</button>
+    </form>
+    {% endif %}
+</div>
+
+{% if tracked_dates %}
+<details class="tracked-dates">
+    <summary>Tracked dates ({{ tracked_dates|length }})</summary>
+    <ul>
+        {% for d in tracked_dates %}
+        <li>
+            <a href="{{ url_for('attendance', class_id=cls.id, date=d) }}">{{ d }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</details>
+{% endif %}
+
+{% if students %}
+<table class="attendance-table">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Present</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <td>{{ student.last_name }}, {{ student.first_name }}</td>
+            <td class="checkbox-cell">
+                <input type="checkbox" name="present" value="1"
+                    {{ "checked" if present_map.get(student.id) else "" }}
+                    hx-post="{{ url_for('toggle_attendance', class_id=cls.id) }}"
+                    hx-vals='{"student_id": "{{ student.id }}", "date": "{{ selected_date }}", "present": "{{ 0 if present_map.get(student.id) else 1 }}"}'
+                    hx-swap="outerHTML">
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No students in this cohort. <a href="{{ url_for('manage') }}">Import students</a>.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ cls.name }} — Report{% endblock %}
+
+{% block content %}
+<h1>{{ cls.name }} — Attendance Report</h1>
+<p>Total days tracked: {{ total_days }}</p>
+
+{% if report_data %}
+<table class="report-table">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Present</th>
+            <th>Absent</th>
+            <th>%</th>
+            <th>Absent Dates</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in report_data %}
+        <tr class="{{ 'low-attendance' if row.pct < 80 and total_days > 0 }}">
+            <td>{{ row.student.last_name }}, {{ row.student.first_name }}</td>
+            <td>{{ row.days_present }}</td>
+            <td>{{ row.days_absent }}</td>
+            <td>{{ row.pct }}%</td>
+            <td class="absent-dates">{{ row.absent_dates | join(", ") }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No attendance data yet.</p>
+{% endif %}
+
+<p><a href="{{ url_for('attendance', class_id=cls.id) }}">Take attendance</a></p>
+{% endblock %}
